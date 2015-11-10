@@ -1,40 +1,57 @@
 Inbox:
+	- @dsl map over list with functions doesn't go any further than the first function. doall can't force it either
+	- @dsl filter doesn't work with lazy seq
 PaaS:
 	Platform as a Service tasks
-  iShock:
-	- Try using spark 1.5 to solve Hive issues @today
-	- Prepare demo @critical @due(2015-10-09) @today
-		- Try Martins schema converter (uses Kite SDK) to workaround HiveContext exceptions		
-		- Reduce size of Arrays Eddi consumer returns
-	- Dispatcher's threading model breaks HiveContext
-	- Add load-csv smoke test
-	- Sort out kinit on the edge node
-	- Revive DataFrames
-		- Fix the tests @critical
-		- Programmatic start of yarn-client mode
-			See example here: http://blog.sequenceiq.com/blog/2014/08/22/spark-submit-in-java/
-			Another (better?) idea is to use spark-launcher_2.10 of v1.5.1 together with our Spark
-		- Add Jars has to be programmatic too
-		- jdbc/exec should retrun a LazySeq
-		- Test Jar's compartibility
-			* DF/Dispatcher Tests should work form Idea/sbt on Linux/Windows
-			* Dispatcher should be runnable from Idea/sbt on Linux/Windows
+	- Scala interop @next
+		Clojure's with-open calls Java .close on the resource(s)
+	- Expose @dataframes functions using reflection @done(2015-11-10)
+	- @dataframes dynamic resource allocation
+	- Expose ability to create spark @dataframes UDFs to DSL
+		There's a func callUDF in catalyst.functions._ to call one by name
+	- Change df/collect! to take optional :columns true and return {columns: [] :rows [[]]} @dataframes @done(2015-11-10)
+	- Write a Custom Classloader
+	- jdbc/exec should retrun a LazySeq @dataframes @next
 	- Sort out processes not dying when Dispatcher's JVM killed with spark-submit
-	- Adapt Kafka module to return a LazySeq @delegated(Nathan)
-	- Address the fact that Jupythor creates a new worker for every refresh @high
+		- Add cluster.leave onStop across the board where we use Akka clustering
+	iShock:
+		- Build a workflow for doing distcp of radial data upon a message on a solace queue @next
+	- Add df/load-csv smoke test @dataframes
 	- The fact that we block on a def also means that if something indefinite going on in a def we can't interupt. Should fix that
-  Nice-to-have's:
-	- with-open marco
-		Analogous to Clojures macro
-		- Scala interop
-			Clojure's with-open calls Java .close on the resource(s)
+	- Address the fact that Jupythor creates a new worker for every refresh 
+	Nice-to-have's:
+		- with-open marco
+			Analogous to Clojures macro
 Do while in office:
 Archive:
+	- Mandtory training @due(2015-10-31) @overdue @done(2015-11-05) @project(PaaS)
+	- Kafka consumes only 1 msg @next @done(2015-10-30) @project(PaaS / iShock)
+	- Kafka to-lazy-seq crashes worker @next @done(2015-11-05) @project(PaaS / iShock)
+	- Tidy up @dataframes module and its API @done(2015-11-05) @project(PaaS / iShock)
+		- Fix the tests @important @done(2015-11-05)
+	- Test Jar's compartibility post spark 1.5 merge @done(2015-11-06) @cancelled(2015-11-06) @project(PaaS / iShock)
+		* DF/Dispatcher Tests should work form Idea/sbt on Linux/Windows
+		* Dispatcher should be runnable from Idea/sbt on Linux/Windows
+	- Sort out kinit on the edge node @delegated(Kevin) @done(2015-11-05) @project(PaaS / iShock)
+	- Add Jars has to be programmatic @cancelled(2015-10-28) @done(2015-10-28) @project(PaaS / iShock)
+	- Sort out deployment repo mess @urgent @today @done(2015-10-28) @project(PaaS / iShock)
+	- Adapt Kafka module to return a LazySeq @delegated(Nathan) @done(2015-10-27) @project(PaaS / iShock)
+	- Dispatcher's threading model breaks HiveContext?? @cancelled(2015-10-27) @done(2015-10-27) @project(PaaS / iShock)
+	- Revive DataFrames @done(2015-10-27) @project(PaaS / iShock)
+		- Fix HiveContext @done(2015-10-27)
+	- Try using spark 1.5 to solve Hive issues @today @done(2015-10-27) @project(PaaS / iShock)
+	- Try Martins schema converter (uses Kite SDK) to workaround HiveContext exception @cancelled(2015-10-27) @done(2015-10-27) @project(PaaS / iShock)
+	- Programmatic start of yarn-client mode @cancelled(2015-10-27) @done(2015-10-27) @project(PaaS / iShock)
+		See example here: http://blog.sequenceiq.com/blog/2014/08/22/spark-submit-in-java/
+		Another (better?) idea is to use spark-launcher_2.10 of v1.5.1 together with our Spark
+		Update: turned out spark launcher uses spark_submit
+	- Prepare demo @critical @due(2015-10-09) @today @done(2015-10-15) @project(PaaS / iShock)
+		- Reduce size of Arrays Eddi consumer returns @cancelled(2015-10-15) @done(2015-10-15) 
 	- Disable DEBUG for Eddi in log4j.props @done (15-10-07 21:43) @project(PaaS / iShock)
-	- How are we going to pass UDF Jars to the data nodes? @cancelled (15-10-07 21:39) @project(PaaS / iShock)
+	- How are we going to pass UDF Jars to the data nodes? @cancelled(2015-10-07) @done(2015-10-07) @project(PaaS / iShock)
 	- Parametrise SQL context (Hive or simple SQL) @done (15-10-07 21:39) @project(PaaS / iShock)
 		Need that cause locally we don't want to test w/ Hive as it creates a local metastore
-	- Make LazySeq -> DataFrame converter @today @cancelled (15-10-07 21:37) @project(PaaS / iShock)
+	- Make LazySeq -> DataFrame converter @today @cancelled(2015-10-07) @done(2015-10-07) @project(PaaS / iShock)
 	- Hive Context @done (15-10-07 10:56) @project(PaaS / iShock)
 	- Revive eddi @done (15-10-07 10:31) @project(PaaS / iShock)
 	- Make ModuleTest working @done (15-10-07 09:07) @project(PaaS / iShock)
